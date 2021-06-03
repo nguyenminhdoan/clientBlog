@@ -16,8 +16,8 @@
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   z-index: 999;
-  margin-top: 20px;
 }
 
 p {
@@ -29,9 +29,13 @@ p {
   background: #fafafa;
 }
 
+.category {
+  display: flex;
+  flex: 6;
+}
+
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 20px 50px;
 }
@@ -40,6 +44,8 @@ p {
   font-size: 22px;
   text-transform: uppercase;
   font-weight: 400;
+  display: flex;
+  flex: 3;
 }
 
 .header .logo .fas {
@@ -98,4 +104,94 @@ p {
 .header .ant-anchor-link:hover:after {
   right: 5%;
   opacity: 1;
+}
+
+.mobileVisible {
+  display: none;
+}
+
+.mobileHidden {
+  display: flex;
+  justify-content: space-around;
+}
+
+.search-icon {
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+  .mobileVisible {
+    display: block;
+  }
+  .mobileHidden {
+    display: none;
+  }
+}
+
+/* Footer */
+.ant-layout-footer {
+  background: #111 !important;
+  color: #fff !important;
+  padding: 20px 0 !important;
+  text-align: center;
+}
+
+.footer .logo {
+  font-size: 22px;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.footer .fas {
+  color: #1890ff;
+  font-size: 28px;
+  margin: 0 5px 0 0;
+}
+
+.footer .logo a {
+  color: #fff;
+}
+
+.footer .socials {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 24px;
+}
+
+.footer .socials li {
+  margin: 0 20px;
+}
+
+.footer .socials a {
+  color: #fff;
+}
+
+.footer .socials a:hover {
+  color: #1890ff;
+}
+
+.footer .goTop:hover {
+  opacity: 0.7;
+}
+
+.mobileVisible {
+  display: none;
+}
+
+.mobileHidden {
+  display: block;
 }

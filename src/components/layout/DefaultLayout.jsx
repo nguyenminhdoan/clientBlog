@@ -1,20 +1,35 @@
 import React from "react";
 import HeaderTop from "./partials/HeaderTop";
-import Footer from "./partials/Footer";
+import FooterBlog from "./partials/FooterBlog";
+import { Layout, Breadcrumb } from "antd";
+import "antd/dist/antd.css";
+const { Header, Content, Footer, Sider } = Layout;
 
 const DefaultLayout = () => {
   return (
-    <div className="default-layout">
-      <header className="header mb-2">
+    <Layout>
+      <Header>
         <HeaderTop />
-      </header>
-      <main className="main">
-        <h1>main</h1>
-      </main>
-      <footer className="footer">
-        <Footer />
-      </footer>
-    </div>
+      </Header>
+      <Layout>
+        <Content
+          className="site-layout"
+          style={{ padding: "0 50px", marginTop: 64 }}
+        >
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 380 }}
+          >
+            Main
+          </div>
+        </Content>
+        <Sider></Sider>
+      </Layout>
+
+      <Footer>
+        <FooterBlog />
+      </Footer>
+    </Layout>
   );
 };
 
