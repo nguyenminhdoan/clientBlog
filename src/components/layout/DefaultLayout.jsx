@@ -1,8 +1,12 @@
 import React from "react";
 import HeaderTop from "./partials/HeaderTop";
 import FooterBlog from "./partials/FooterBlog";
-import { Layout, Breadcrumb } from "antd";
 import "antd/dist/antd.css";
+import { Layout, Menu } from "antd";
+import Banner from "../banner/Banner";
+import Category from "../category/Category";
+import Posts from "../../pages/posts/Posts";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 const DefaultLayout = () => {
@@ -11,7 +15,9 @@ const DefaultLayout = () => {
       <Header>
         <HeaderTop />
       </Header>
-      <Layout>
+      <Banner />
+
+      <Layout className="site-layout-background" style={{ padding: "24px 0" }}>
         <Content
           className="site-layout"
           style={{ padding: "0 50px", marginTop: 64 }}
@@ -20,10 +26,20 @@ const DefaultLayout = () => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 380 }}
           >
-            Main
+            <Posts />
           </div>
         </Content>
-        <Sider></Sider>
+
+        <Sider
+          theme="light  "
+          className="site-layout-background"
+          width={300}
+          marginLeft={20}
+        >
+          <Menu style={({ height: "100%" }, { width: "100%" })}>
+            <Category />
+          </Menu>
+        </Sider>
       </Layout>
 
       <Footer>
