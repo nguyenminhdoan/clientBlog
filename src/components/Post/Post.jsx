@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "antd/dist/antd.css";
-import { Card, Row, Col } from "antd";
+import { Card } from "antd";
 
 const { Meta } = Card;
 
