@@ -7,14 +7,11 @@ import Banner from "../banner/Banner";
 import Category from "../category/Category";
 import Posts from "../../pages/posts/Posts";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const DefaultLayout = () => {
   return (
     <Layout>
-      <Header>
-        <HeaderTop />
-      </Header>
       <Banner />
 
       <Layout className="site-layout-background" style={{ padding: "24px 0" }}>
@@ -41,10 +38,6 @@ const DefaultLayout = () => {
           </Menu>
         </Sider>
       </Layout>
-
-      <Footer>
-        <FooterBlog />
-      </Footer>
     </Layout>
   );
 };
