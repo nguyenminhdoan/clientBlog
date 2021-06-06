@@ -3,7 +3,7 @@ import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 import WritePost from "../../components/writePost/WritePost";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const Write = () => {
   return (
     <Layout>
