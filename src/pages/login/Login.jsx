@@ -1,5 +1,6 @@
 import { Form, Input, Button, Checkbox, Col } from "antd";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const layout = {
   labelCol: {
@@ -63,8 +64,8 @@ const Login = () => {
           <Input.Password />
         </Form.Item>
         <Col>
-         Don't have account yet? {}
-          <a href="/signup">Sign up for free!</a>
+          Don't have account yet? {}
+          <Link to="/register">Sign up for free!</Link>
         </Col>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">

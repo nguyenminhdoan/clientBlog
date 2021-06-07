@@ -19,7 +19,7 @@ const Banner = () => {
 };
 
 const BannerStyle = styled.div`
-  margin-top: 90px;
+  margin-top: 20px;
 `;
 
 const BannerTitle = styled.div`

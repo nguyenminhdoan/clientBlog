@@ -27,10 +27,10 @@ const HeaderTop = () => {
           <div className="category">
             <div className="mobileHidden">
               <Anchor targetOffset="65">
-                <Link href="#hero" title="Home" />
-                <Link href="#about" title="About" />
-                <Link href="#contact" title="Contact" />
-                <Link href="#write" title="Write" />
+                <Link href="/" title="Home" />
+                <Link href="/about" title="About" />
+                <Link href="/contact" title="Contact" />
+                <Link href="/write" title="Write" />
               </Anchor>
             </div>
           </div>
@@ -54,10 +54,10 @@ const HeaderTop = () => {
               visible={visible}
             >
               <Anchor targetOffset="65">
-                <Link href="#hero" title="Home" />
-                <Link href="#about" title="About" />
-                <Link href="#contact" title="Contact" />
-                <Link href="#write" title="Write" />
+                <Link href="/" title="Home" />
+                <Link href="/about" title="About" />
+                <Link href="/contact" title="Contact" />
+                <Link href="/write" title="Write" />
               </Anchor>
             </Drawer>
           </div>

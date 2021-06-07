@@ -1,5 +1,6 @@
 import { Form, Input, Button, Checkbox, Col } from "antd";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const layout = {
   labelCol: {
@@ -26,8 +27,8 @@ const Register = () => {
   };
 
   return (
-    <StyleLogin>
-      <StyleLoginTitle className="loginTitle">Register</StyleLoginTitle>
+    <StyleRegister>
+      <StyleRegisterTitle className="loginTitle">Register</StyleRegisterTitle>
       <Form
         {...layout}
         name="basic"
@@ -47,20 +48,24 @@ const Register = () => {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Username " style={{ borderRadius: "5px" }} />
         </Form.Item>
 
         <Form.Item
-          label="Email"
+          label="E-mail"
           name="Email"
           rules={[
             {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
               required: true,
-              message: "Please input your Email!",
+              message: "Please input your E-mail!",
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Email " style={{ borderRadius: "5px" }} />
         </Form.Item>
 
         <Form.Item
@@ -73,27 +78,31 @@ const Register = () => {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password
+            placeholder="Password"
+            style={{ borderRadius: "5px" }}
+          />
         </Form.Item>
         <Col>
-          <a href="/signup">Login</a>
+          <span>Already register?</span>
+          <Link to="/Login"> Login</Link>
         </Col>
 
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button
+            style={{ marginTop: "18px" }}
+            type="primary"
+            htmlType="submit"
+          >
             Register
           </Button>
         </Form.Item>
       </Form>
-    </StyleLogin>
+    </StyleRegister>
   );
 };
 
-const StyleLogin = styled.div`
+const StyleRegister = styled.div`
   height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
@@ -103,10 +112,17 @@ const StyleLogin = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://images.pexels.com/photos/768473/pexels-photo-768473.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+    url("https://images.pexels.com/photos/317355/pexels-photo-317355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-size: cover;
+  a {
+    font-size: 16px;
+    padding: 20px;
+    :hover {
+      color: #276dbd;
+    }
+  }
 `;
-const StyleLoginTitle = styled.span`
+const StyleRegisterTitle = styled.span`
   font-size: 50px;
   background: -webkit-linear-gradient(#38b4ae, #623ca0);
   -webkit-background-clip: text;

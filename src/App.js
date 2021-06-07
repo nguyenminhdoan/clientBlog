@@ -9,27 +9,46 @@ import Write from "./pages/write/Write";
 import UserSetting from "./pages/userSetting/UserSetting";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Posts from "./pages/posts/Posts";
 
 const { Header, Footer } = Layout;
 
 function App() {
+  const currentUser = false;
   return (
-    <div className="App">
-      <Layout>
-        <Header>
-          <HeaderTop />
-        </Header>
-        {/* <DefaultLayout /> */}
-        {/* <SinglePost /> */}
-        {/* <Write /> */}
-        {/* <UserSetting /> */}
-        {/* <Login /> */}
-        <Register />
-        <Footer>
-          <FooterBlog />
-        </Footer>
-      </Layout>
-    </div>
+    <Router>
+      <Switch>
+        <Layout>
+          <Header>
+            <HeaderTop />
+          </Header>
+          <Route exact path="/">
+            <DefaultLayout />
+          </Route>
+          <Route exact path="/posts">
+            <DefaultLayout />
+          </Route>
+          <Route path="/register">
+            {currentUser ? <DefaultLayout /> : <Register />}
+          </Route>
+          <Route path="/login">
+            {currentUser ? <DefaultLayout /> : <Login />}
+          </Route>
+          <Route path="/post/:id">
+            <SinglePost />
+          </Route>
+          <Route path="/write">{currentUser ? <Write /> : <Login />}</Route>
+          <Route path="/settings">
+            {currentUser ? <UserSetting /> : <Login />}
+          </Route>
+
+          <Footer>
+            <FooterBlog />
+          </Footer>
+        </Layout>
+      </Switch>
+    </Router>
   );
 }
 
