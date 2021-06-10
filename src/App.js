@@ -19,34 +19,36 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Layout>
-          <Header>
-            <HeaderTop />
-          </Header>
-          <Route exact path="/">
-            <DefaultLayout />
-          </Route>
-          <Route exact path="/posts">
-            <DefaultLayout />
-          </Route>
-          <Route path="/register">
-            {currentUser ? <DefaultLayout /> : <Register />}
-          </Route>
-          <Route path="/login">
-            {currentUser ? <DefaultLayout /> : <Login />}
-          </Route>
-          <Route path="/post/:id">
-            <SinglePost />
-          </Route>
-          <Route path="/write">{currentUser ? <Write /> : <Login />}</Route>
-          <Route path="/settings">
-            {currentUser ? <UserSetting /> : <Login />}
-          </Route>
+        <>
+          <Layout>
+            <Header>
+              <HeaderTop />
+            </Header>
+            <Route exact path="/">
+              <DefaultLayout />
+            </Route>
+            <Route exact path="/posts">
+              <DefaultLayout />
+            </Route>
+            <Route path="/register">
+              {currentUser ? <DefaultLayout /> : <Register />}
+            </Route>
+            <Route path="/login">
+              {currentUser ? <DefaultLayout /> : <Login />}
+            </Route>
+            <Route path="/post/:id">
+              <SinglePost />
+            </Route>
+            <Route path="/write">{currentUser ? <Write /> : <Login />}</Route>
+            <Route path="/settings">
+              {currentUser ? <UserSetting /> : <Login />}
+            </Route>
 
-          <Footer>
-            <FooterBlog />
-          </Footer>
-        </Layout>
+            <Footer>
+              <FooterBlog />
+            </Footer>
+          </Layout>
+        </>
       </Switch>
     </Router>
   );

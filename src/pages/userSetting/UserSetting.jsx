@@ -21,12 +21,7 @@ const UserSetting = () => {
           </div>
         </Content>
 
-        <Sider
-          theme="light  "
-          className="site-layout-background"
-          width={300}
-          marginLeft={20}
-        >
+        <Sider theme="light  " className="site-layout-background" width={300}>
           <Menu style={({ height: "100%" }, { width: "100%" })}>
             <Category />
           </Menu>

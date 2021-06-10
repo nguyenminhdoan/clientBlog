@@ -3,10 +3,12 @@ import { Layout } from "antd";
 import "antd/dist/antd.css";
 import { Anchor, Drawer, Button } from "antd";
 import "./headerStyle.css";
+import { useHistory } from "react-router-dom";
 const { Link } = Anchor;
 
 const { Header } = Layout;
 const HeaderTop = () => {
+  const history = useHistory();
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
@@ -26,7 +28,13 @@ const HeaderTop = () => {
           </div>
           <div className="category">
             <div className="mobileHidden">
-              <Anchor targetOffset="65">
+              <Anchor
+                targetOffset="65"
+                onClick={(e, link) => {
+                  history.push(link.href);
+                  e.preventDefault();
+                }}
+              >
                 <Link href="/" title="Home" />
                 <Link href="/about" title="About" />
                 <Link href="/contact" title="Contact" />
@@ -40,7 +48,7 @@ const HeaderTop = () => {
               src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p320x320/95311911_1196339757364555_4657815680878379008_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=7206a8&_nc_ohc=Kz3paLSyu6AAX8E0P3T&_nc_ht=scontent-sin6-1.xx&tp=6&oh=56cce99347b38e7599d321e31ffc3d24&oe=60DEEE9B"
               alt="avatar"
             />
-            <i class="search-icon fas fa-search"></i>
+            <i className="search-icon fas fa-search"></i>
           </div>
 
           <div className="mobileVisible">

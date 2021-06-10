@@ -2,42 +2,43 @@ import React from "react";
 import styled from "styled-components";
 import "antd/dist/antd.css";
 import { Card } from "antd";
+import { Link } from "react-router-dom";
 
-const { Meta } = Card;
-
-const Post = () => {
+const Post = (props) => {
+  const { post } = props;
   return (
-    <div>
-      <Card
-        hoverable
-        cover={
-          <img
-            style={({ width: "100%" }, { height: "350px" })}
-            alt="Modern Design"
-            src="https://images.unsplash.com/photo-1622746606812-c4571647a30a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
-          />
-        }
-      >
-        <StylePostInfo>
-          <StylePostCat>
-            <span className="post-cat">Music</span>
-            <span className="post-cat">Life</span>
-          </StylePostCat>
-          <StylePostTitle>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem,
-            reprehenderit.
-          </StylePostTitle>
-          <hr />
-          <StylePostDate>1 hour ago</StylePostDate>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-            aspernatur repellat animi illo ad atque rem, placeat enim saepe
-            labore voluptate sequi, ullam accusantium consectetur! Atque modi
-            fuga quo praesentium?
-          </p>
-        </StylePostInfo>
-      </Card>
-    </div>
+    <Link to={`/post/${post._id}`}>
+      <div>
+        <Card
+          hoverable
+          cover={
+            <img
+              style={({ height: "70vh" }, { borderRadius: "4px 4px 0 0 " })}
+              alt="Modern Design"
+              src={
+                post.photo ||
+                `https://images.unsplash.com/photo-1622746606812-c4571647a30a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80`
+              }
+            />
+          }
+        >
+          <StylePostInfo>
+            <StylePostCat>
+              {post.categories.map((cat, i) => (
+                <span key={i}>{cat}</span>
+              ))}
+            </StylePostCat>
+            <StylePostTitle>{post.title}</StylePostTitle>
+
+            <hr />
+            <StylePostDate>
+              {new Date(post.createdAt).toDateString()}
+            </StylePostDate>
+            <StylePostDesc>{post.desc}</StylePostDesc>
+          </StylePostInfo>
+        </Card>
+      </div>
+    </Link>
   );
 };
 

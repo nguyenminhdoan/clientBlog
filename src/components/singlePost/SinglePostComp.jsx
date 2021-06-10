@@ -1,43 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { fetchSinglePost } from "../../pages/posts/postAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const SinglePostComp = () => {
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.posts);
+  console.log(posts);
+  let { id } = useParams();
+  useEffect(() => {
+    dispatch(fetchSinglePost(id));
+  }, id);
+
   return (
     <div>
+     
       <StylePostTitle>
-        Lorem ipsum dolor sit amet.
+        {posts.title}
         <StylePostEdit>
-          <i class="fas fa-edit"></i>
-          <i class="fas fa-trash"></i>
+          <i className="fas fa-edit"></i>
+          <i className="fas fa-trash"></i>
         </StylePostEdit>
       </StylePostTitle>
       <StyleInfo>
         <span className="post-info_author">
-          Author: <b>NMD</b>
+          Author: <b>{posts.username}</b>
         </span>
-        <span className="post-info_date">1 hour ago</span>
+        <span className="post-info_date">
+          {new Date(posts.createdAt).toDateString()}
+        </span>
       </StyleInfo>
-      <StyleContentPost>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut adipisci
-        quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-        adipisci quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-        adipisci quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-        adipisci quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-        adipisci quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-        adipisci quae vitae quidem ipsum eos beatae deserunt, modi ducimus earum
-        architecto id eum aperiam incidunt odit corrupti nam assumenda
-        molestiae!
-      </StyleContentPost>
+      <StyleContentPost>{posts.desc}</StyleContentPost>
     </div>
   );
 };
