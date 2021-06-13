@@ -1,7 +1,8 @@
 import { Form, Input, Button, Checkbox, Col } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import { userLogin } from "./loginAction";
+import { useDispatch } from "react-redux";
 const layout = {
   labelCol: {
     span: 8,
@@ -18,8 +19,12 @@ const tailLayout = {
 };
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const { username, password } = values;
+
+    dispatch(userLogin({ username, password }));
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -1,11 +1,9 @@
-import React from "react";
-import HeaderTop from "./partials/HeaderTop";
-import FooterBlog from "./partials/FooterBlog";
-import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
+import "antd/dist/antd.css";
+import React from "react";
+import Posts from "../../pages/posts/Posts";
 import Banner from "../banner/Banner";
 import Category from "../category/Category";
-import Posts from "../../pages/posts/Posts";
 
 const { Content, Sider } = Layout;
 

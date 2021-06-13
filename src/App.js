@@ -1,21 +1,23 @@
-import DefaultLayout from "./components/layout/DefaultLayout";
-import "./globalStyle.css";
-import "antd/dist/antd.css";
 import { Layout } from "antd";
-import SinglePost from "./pages/singlePost/SinglePost";
-import HeaderTop from "./components/layout/partials/HeaderTop";
+import "antd/dist/antd.css";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import DefaultLayout from "./components/layout/DefaultLayout";
 import FooterBlog from "./components/layout/partials/FooterBlog";
-import Write from "./pages/write/Write";
-import UserSetting from "./pages/userSetting/UserSetting";
+import HeaderTop from "./components/layout/partials/HeaderTop";
+import "./globalStyle.css";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Posts from "./pages/posts/Posts";
+import SinglePost from "./pages/singlePost/SinglePost";
+import UserSetting from "./pages/userSetting/UserSetting";
+import Write from "./pages/write/Write";
 
 const { Header, Footer } = Layout;
 
 function App() {
-  const currentUser = false;
+  const { isAuth } = useSelector((state) => state.userLogin);
+
+  const currentUser = isAuth;
   return (
     <Router>
       <Switch>

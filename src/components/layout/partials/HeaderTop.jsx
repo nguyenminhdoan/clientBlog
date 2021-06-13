@@ -42,6 +42,19 @@ const HeaderTop = () => {
               </Anchor>
             </div>
           </div>
+          <div className="category-right">
+            <div className="mobileHidden">
+              <Anchor
+                onClick={(e, link) => {
+                  history.push(link.href);
+                  e.preventDefault();
+                }}
+              >
+                <Link href="/login" title="login" />
+                <Link href="/register" title="register" />
+              </Anchor>
+            </div>
+          </div>
           <div className="profile">
             <img
               className="avatar"
@@ -61,11 +74,19 @@ const HeaderTop = () => {
               onClose={onClose}
               visible={visible}
             >
-              <Anchor targetOffset="65">
+              <Anchor
+                targetOffset="65"
+                onClick={(e, link) => {
+                  history.push(link.href);
+                  e.preventDefault();
+                }}
+              >
                 <Link href="/" title="Home" />
                 <Link href="/about" title="About" />
                 <Link href="/contact" title="Contact" />
                 <Link href="/write" title="Write" />
+                <Link href="/login" title="login" />
+                <Link href="/register" title="register" />
               </Anchor>
             </Drawer>
           </div>

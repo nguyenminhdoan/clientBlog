@@ -9,8 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const Posts = () => {
   const location = useLocation();
-  const path = location.pathname;
-  // console.log(path);
+  const { path } = location;
   const { posts, isLoading } = useSelector((state) => state.posts);
 
   const dispatch = useDispatch();
@@ -25,6 +24,7 @@ const Posts = () => {
           <Alert type="info" />
         </Spin>
       ) : (
+        Array.isArray(posts) &&
         posts.map((post) => (
           <Col
             key={post._id}

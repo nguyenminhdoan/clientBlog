@@ -7,15 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 const SinglePostComp = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.posts);
-  console.log(posts);
   let { id } = useParams();
   useEffect(() => {
     dispatch(fetchSinglePost(id));
-  }, id);
+  }, [id, dispatch]);
 
   return (
     <div>
-     
       <StylePostTitle>
         {posts.title}
         <StylePostEdit>

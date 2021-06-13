@@ -1,6 +1,18 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 const Category = () => {
+  const [cats, setCats] = useState([]);
+
+  useEffect(() => {
+    const getCats = async () => {
+      const result = await axios.get("http://localhost:3003/api/category");
+      setCats(result.data.data);
+    };
+    getCats();
+  }, []);
   return (
     <StyleSidebar>
       <StyleSidebarItems>
@@ -19,12 +31,15 @@ const Category = () => {
       <StyleSidebarItems>
         <StyleSidebarTitle>CATEGORIES</StyleSidebarTitle>
         <StyleSidebarList>
-          <li className="sidebar-list_item">Life</li>
-          <li className="sidebar-list_item">Music</li>
-          <li className="sidebar-list_item">Style</li>
-          <li className="sidebar-list_item">Sport</li>
-          <li className="sidebar-list_item">Tech</li>
-          <li className="sidebar-list_item">Cinema</li>
+          {cats.map((cat) => (
+            <Link
+              key={cat._id}
+              style={{ color: "black" }}
+              to={`/?cat=${cat.name}`}
+            >
+              <li>{cat.name}</li>
+            </Link>
+          ))}
         </StyleSidebarList>
       </StyleSidebarItems>
       <StyleSidebarItems>
@@ -95,7 +110,7 @@ const StyleSidebarList = styled.ul`
     width: 50%;
     margin-top: 15px;
     cursor: pointer;
-    padding: 3px 0;
+    padding: 7px 0;
   }
 
   i {

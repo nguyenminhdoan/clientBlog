@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import "antd/dist/antd.css";
 import WritePost from "../../components/writePost/WritePost";
 

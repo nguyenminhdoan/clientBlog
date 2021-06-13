@@ -1,7 +1,10 @@
-import { Form, Input, Button, Checkbox, Col } from "antd";
-import styled from "styled-components";
+import { Button, Col, Form, Input, Alert, Spin } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import styled from "styled-components";
+import { registerNewUser } from "./registerAction";
+import { resetMessage } from "./registerSlice";
 const layout = {
   labelCol: {
     span: 8,
@@ -18,13 +21,28 @@ const tailLayout = {
 };
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const { isLoading, status, message } = useSelector(
+    (state) => state.userRegister
+  );
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const { username, email, password } = values;
+
+    dispatch(registerNewUser({ username, email, password }));
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  status === "success" && window.location.replace("/login");
+
+  useEffect(() => {
+    return () => {
+      message && dispatch(resetMessage());
+    };
+  }, [dispatch, message]);
 
   return (
     <StyleRegister>
@@ -53,7 +71,7 @@ const Register = () => {
 
         <Form.Item
           label="E-mail"
-          name="Email"
+          name="email"
           rules={[
             {
               type: "email",
@@ -84,8 +102,17 @@ const Register = () => {
           />
         </Form.Item>
         <Col>
+          {message && (
+            <Alert
+              message={message}
+              type={status === "success" ? "success" : "error"}
+            ></Alert>
+          )}
+        </Col>
+        <Col>
           <span>Already register?</span>
           <Link to="/Login"> Login</Link>
+          {isLoading && <Spin tip="loading" />}
         </Col>
 
         <Form.Item {...tailLayout}>

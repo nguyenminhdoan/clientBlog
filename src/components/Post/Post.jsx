@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const Post = (props) => {
   const { post } = props;
+ 
   return (
     <Link to={`/post/${post._id}`}>
       <div>
