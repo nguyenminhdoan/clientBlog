@@ -23,21 +23,27 @@ function App() {
       <Switch>
         <>
           <Layout>
+
             <Header>
               <HeaderTop />
             </Header>
+
             <Route exact path="/">
               <DefaultLayout />
             </Route>
+
             <Route exact path="/posts">
               <DefaultLayout />
             </Route>
+
             <Route path="/register">
               {currentUser ? <DefaultLayout /> : <Register />}
             </Route>
+
             <Route path="/login">
               {currentUser ? <DefaultLayout /> : <Login />}
             </Route>
+            
             <Route path="/post/:id">
               <SinglePost />
             </Route>

@@ -6,7 +6,7 @@ import {
   fetchSinglePostSuccess,
   fetchSinglePostFail,
 } from "./postsSlice";
-import { getAllPosts, getSinglePost } from "../../api/postAPI";
+import { getAllPosts, getSinglePost, createPost } from "../../api/postAPI";
 
 export const fetchAllPosts = () => async (dispatch) => {
   dispatch(fetchPostLoading());
@@ -30,4 +30,11 @@ export const fetchSinglePost = (id) => async (dispatch) => {
     console.log(error);
     dispatch(fetchSinglePostFail(error.message));
   }
+};
+
+export const createNewPost = (formData) => async (dispatch) => {
+  try {
+    const result = await createPost(formData);
+    console.log(result);
+  } catch (error) {}
 };

@@ -14,7 +14,6 @@ export const createNewUser = async (formData) => {
 export const loginUser = async (formData) => {
   try {
     const result = await axios.post(`${userAPI}login`, formData);
-    console.log(result);
     if (result.data.status === "success") {
       sessionStorage.setItem("accessJWT", result.data.accessJWT);
       localStorage.setItem(
@@ -23,6 +22,33 @@ export const loginUser = async (formData) => {
       );
     }
     return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const userLogout = async () => {
+  try {
+    await axios.delete(`${userAPI}logout`, {
+      headers: {
+        Authorization: sessionStorage.getItem("accessJWT"),
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserProfile = async () => {
+  try {
+    const accessJWT = sessionStorage.getItem("accessJWT");
+    if (!accessJWT) console.log("token not found");
+    const result = await axios.get(userAPI, {
+      headers: {
+        Authorization: accessJWT,
+      },
+    });
+    return result.data;
   } catch (error) {
     console.log(error);
   }

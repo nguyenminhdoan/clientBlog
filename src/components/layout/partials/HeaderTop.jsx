@@ -4,10 +4,25 @@ import "antd/dist/antd.css";
 import { Anchor, Drawer, Button } from "antd";
 import "./headerStyle.css";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../../../api/userAPI";
+import { logout } from "../../../pages/login/loginSlice";
+
 const { Link } = Anchor;
 
 const { Header } = Layout;
 const HeaderTop = () => {
+  const { isAuth } = useSelector((state) => state.userLogin);
+  const dispatch = useDispatch();
+  const logOut = () => {
+    sessionStorage.removeItem("accessJWT");
+    localStorage.removeItem("blogSite");
+    userLogout();
+    dispatch(logout());
+
+    history.push("/");
+  };
+
   const history = useHistory();
   const [visible, setVisible] = useState(false);
 
@@ -42,6 +57,7 @@ const HeaderTop = () => {
               </Anchor>
             </div>
           </div>
+
           <div className="category-right">
             <div className="mobileHidden">
               <Anchor
@@ -50,11 +66,22 @@ const HeaderTop = () => {
                   e.preventDefault();
                 }}
               >
-                <Link href="/login" title="login" />
-                <Link href="/register" title="register" />
+                {isAuth ? (
+                  <>
+                    <Button type="primary" onClick={logOut}>
+                      Log out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" title="login" />
+                    <Link href="/register" title="register" />
+                  </>
+                )}
               </Anchor>
             </div>
           </div>
+
           <div className="profile">
             <img
               className="avatar"

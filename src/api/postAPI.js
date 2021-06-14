@@ -19,3 +19,14 @@ export const getSinglePost = async (id) => {
     console.log(error);
   }
 };
+
+export const createPost = async (formData) => {
+  try {
+    const result = await axios.post(`${postAPI}`, formData, {
+      headers: { Authorization: sessionStorage.getItem("accessJWT") },
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
