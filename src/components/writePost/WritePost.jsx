@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./write.css";
-import { createNewPost } from "../../pages/posts/postAction";
+import { createNewPost, importImg } from "../../pages/posts/postAction";
 import { fetchUserProfile } from "../../pages/login/loginAction";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,12 +15,24 @@ const WritePost = () => {
   const { user } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
+  let newFormPost;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchUserProfile());
 
-    const newFormPost = { ...formPost, username: user.username };
+    if (formPost.file) {
+      const data = new FormData();
+      const filename = Date.now().toString() + formPost.file;
+      data.append("name", filename);
+      data.append("file", formPost.file);
+      newFormPost = { ...formPost, username: user.username, photo: filename };
+      // goi api
+      console.log(newFormPost);
+      importImg(newFormPost);
+    }
+
+    newFormPost = { ...formPost, username: user.username };
 
     dispatch(createNewPost(newFormPost));
   };
@@ -33,11 +45,8 @@ const WritePost = () => {
 
   return (
     <div className="write">
-      <img
-        className="writeImg"
-        src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-        alt=""
-      />
+      {formPost.file && <img className="writeImg" src="" alt="" />}
+
       <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
           <label htmlFor="fileInput">
