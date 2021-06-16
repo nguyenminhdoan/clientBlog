@@ -40,6 +40,7 @@ export const fetchSinglePost = (id) => async (dispatch) => {
 export const createNewPost = (formData) => async (dispatch) => {
   try {
     const result = await createPost(formData);
+    console.log(result);
     // console.log(result);
   } catch (error) {
     console.log(error);

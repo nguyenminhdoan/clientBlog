@@ -18,6 +18,7 @@ export const userLogin = (formData) => async (dispatch) => {
       return dispatch(loginFail(result.message));
     }
     dispatch(loginSuccess());
+    dispatch(fetchUserProfile());
   } catch (error) {
     console.log(error);
     dispatch(loginFail());

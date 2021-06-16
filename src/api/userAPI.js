@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const userAPI = "http://localhost:3003/api/user/";
+const USER_API = "http://localhost:3003/api/user/";
+const TOKEN_API = "http://localhost:3003/api/token";
 
 export const createNewUser = async (formData) => {
   try {
-    const result = await axios.post(`${userAPI}register`, formData);
+    const result = await axios.post(`${USER_API}register`, formData);
     return result;
   } catch (error) {
     console.log(error);
@@ -13,7 +14,7 @@ export const createNewUser = async (formData) => {
 
 export const loginUser = async (formData) => {
   try {
-    const result = await axios.post(`${userAPI}login`, formData);
+    const result = await axios.post(`${USER_API}login`, formData);
     if (result.data.status === "success") {
       sessionStorage.setItem("accessJWT", result.data.accessJWT);
       localStorage.setItem(
@@ -29,7 +30,7 @@ export const loginUser = async (formData) => {
 
 export const userLogout = async () => {
   try {
-    await axios.delete(`${userAPI}logout`, {
+    await axios.delete(`${USER_API}logout`, {
       headers: {
         Authorization: sessionStorage.getItem("accessJWT"),
       },
@@ -43,7 +44,7 @@ export const getUserProfile = async () => {
   try {
     const accessJWT = sessionStorage.getItem("accessJWT");
     if (!accessJWT) console.log("token not found");
-    const result = await axios.get(userAPI, {
+    const result = await axios.get(USER_API, {
       headers: {
         Authorization: accessJWT,
       },
@@ -51,5 +52,25 @@ export const getUserProfile = async () => {
     return result.data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const fetchNewJWT = async () => {
+  try {
+    const { refreshJWT } = JSON.parse(localStorage.getItem("blogSite"));
+    if (!refreshJWT) {
+      Promise.reject("token not found");
+    }
+    const result = await axios.get(TOKEN_API, {
+      headers: {
+        Authorization: refreshJWT,
+      },
+    });
+    if (result.data.status === "success") {
+      sessionStorage.setItem("accessJWT", result.data.accessJWT);
+    }
+    Promise.resolve(true);
+  } catch (error) {
+    console.log(error.message);
   }
 };

@@ -15,21 +15,22 @@ const WritePost = () => {
   const { user } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
-  let newFormPost;
 
   const handleSubmit = (e) => {
+    let newFormPost;
     e.preventDefault();
+
     dispatch(fetchUserProfile());
 
     if (formPost.file) {
-      const data = new FormData();
-      const filename = Date.now().toString() + formPost.file;
-      data.append("name", filename);
-      data.append("file", formPost.file);
-      newFormPost = { ...formPost, username: user.username, photo: filename };
-      // goi api
-      console.log(newFormPost);
-      importImg(newFormPost);
+      const formData = new FormData();
+      formData.append("name", formPost.file.file.name);
+      formData.append("file", formPost.file.file);
+      newFormPost = { ...formPost, username: user.username };
+
+      dispatch(createNewPost(newFormPost));
+      console.log(formPost.file.file);
+      dispatch(importImg(formData));
     }
 
     newFormPost = { ...formPost, username: user.username };
@@ -37,15 +38,31 @@ const WritePost = () => {
     dispatch(createNewPost(newFormPost));
   };
 
+  const handleUploadImg = (e) => {
+    const { files } = e.target;
+    console.log(files[0]);
+
+    if (files && files.length > 0) {
+      const url = URL.createObjectURL(e.target.files[0]);
+
+      setFormPost({
+        ...formPost,
+        file: { ...files[0], file: files[0], url },
+      });
+      // console.log(formPost);
+    }
+  };
   const handleOnchange = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value);
     setFormPost({ ...formPost, [name]: value });
+    // console.log(formPost);
   };
 
   return (
     <div className="write">
-      {formPost.file && <img className="writeImg" src="" alt="" />}
+      {formPost.file && formPost.file.url && (
+        <img className="writeImg" src={formPost.file.url} alt="" />
+      )}
 
       <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
@@ -58,7 +75,7 @@ const WritePost = () => {
             type="file"
             style={{ display: "none" }}
             name="file"
-            onChange={handleOnchange}
+            onChange={handleUploadImg}
           />
           <input
             className="writeInput"
