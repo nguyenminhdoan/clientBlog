@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const SinglePostComp = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.posts);
+  const { isAuth } = useSelector((state) => state.userLogin);
   let { id } = useParams();
   useEffect(() => {
     dispatch(fetchSinglePost(id));
@@ -17,8 +18,15 @@ const SinglePostComp = () => {
       <StylePostTitle>
         {posts.title}
         <StylePostEdit>
-          <i className="fas fa-edit"></i>
-          <i className="fas fa-trash"></i>
+          {isAuth ? (
+            <>
+              {" "}
+              <i className="fas fa-edit"></i>
+              <i className="fas fa-trash"></i>
+            </>
+          ) : (
+            ""
+          )}
         </StylePostEdit>
       </StylePostTitle>
       <StyleInfo>

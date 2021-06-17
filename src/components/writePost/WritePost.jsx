@@ -26,10 +26,13 @@ const WritePost = () => {
       const formData = new FormData();
       formData.append("name", formPost.file.file.name);
       formData.append("file", formPost.file.file);
-      newFormPost = { ...formPost, username: user.username };
+      newFormPost = {
+        ...formPost,
+        photo: formPost.file.file.name,
+        username: user.username,
+      };
 
       dispatch(createNewPost(newFormPost));
-      console.log(formPost.file.file);
       dispatch(importImg(formData));
     }
 

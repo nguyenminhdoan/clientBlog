@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 
 const Post = (props) => {
   const { post } = props;
- 
+  const PF = "http://localhost:3003/images/";
+
   return (
     <Link to={`/post/${post._id}`}>
       <div>
@@ -17,8 +18,9 @@ const Post = (props) => {
               style={({ height: "70vh" }, { borderRadius: "4px 4px 0 0 " })}
               alt="Modern Design"
               src={
-                post.photo ||
-                `https://images.unsplash.com/photo-1622746606812-c4571647a30a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80`
+                post.photo
+                  ? PF + post.photo
+                  : "https://images.unsplash.com/photo-1621570168855-e9651220e831?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
               }
             />
           }
