@@ -43,7 +43,6 @@ const WritePost = () => {
 
   const handleUploadImg = (e) => {
     const { files } = e.target;
-    console.log(files[0]);
 
     if (files && files.length > 0) {
       const url = URL.createObjectURL(e.target.files[0]);

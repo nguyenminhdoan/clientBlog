@@ -4,6 +4,7 @@ const initialState = {
   posts: [],
   isLoading: false,
   error: "",
+  msgSuccess: "",
 };
 
 const PostsSlice = createSlice({
@@ -34,6 +35,19 @@ const PostsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    // delete post
+    deletePostLoading: (state) => {
+      state.isLoading = true;
+    },
+    deletePostSuccess: (state, action) => {
+      state.isLoading = true;
+      state.msgSuccess = action.payload;
+    },
+    deletePostFail: (state, action) => {
+      state.isLoading = true;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -46,5 +60,8 @@ export const {
   fetchSinglePostLoading,
   fetchSinglePostSuccess,
   fetchSinglePostFail,
+  deletePostLoading,
+  deletePostSuccess,
+  deletePostFail,
 } = actions;
 export default reducer;

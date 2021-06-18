@@ -1,17 +1,26 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { fetchSinglePost } from "../../pages/posts/postAction";
+import { fetchSinglePost, deletePost } from "../../pages/posts/postAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const SinglePostComp = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+
   const { posts } = useSelector((state) => state.posts);
   const { isAuth } = useSelector((state) => state.userLogin);
-  let { id } = useParams();
+
+  const formData = { _id: id, clientId: posts.clientId };
+
   useEffect(() => {
     dispatch(fetchSinglePost(id));
   }, [id, dispatch]);
+
+  const handleDelete = () => {
+    dispatch(deletePost(formData));
+    window.location.replace("/");
+  };
 
   return (
     <div>
@@ -22,7 +31,7 @@ const SinglePostComp = () => {
             <>
               {" "}
               <i className="fas fa-edit"></i>
-              <i className="fas fa-trash"></i>
+              <i onClick={handleDelete} className="fas fa-trash"></i>
             </>
           ) : (
             ""

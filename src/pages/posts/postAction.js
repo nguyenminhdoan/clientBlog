@@ -5,12 +5,16 @@ import {
   fetchSinglePostLoading,
   fetchSinglePostSuccess,
   fetchSinglePostFail,
+  deletePostFail,
+  deletePostLoading,
+  deletePostSuccess,
 } from "./postsSlice";
 import {
   getAllPosts,
   getSinglePost,
   createPost,
   upLoadFile,
+  deletePostAPI,
 } from "../../api/postAPI";
 
 export const fetchAllPosts = () => async (dispatch) => {
@@ -41,7 +45,6 @@ export const createNewPost = (formData) => async (dispatch) => {
   try {
     const result = await createPost(formData);
     console.log(result);
-    // console.log(result);
   } catch (error) {
     console.log(error);
   }
@@ -49,9 +52,22 @@ export const createNewPost = (formData) => async (dispatch) => {
 
 export const importImg = (formData) => async (dispatch) => {
   try {
-    const result = await upLoadFile(formData);
-    console.log(result);
+    await upLoadFile(formData);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deletePost = (formData) => async (dispatch) => {
+  try {
+    dispatch(deletePostLoading());
+    const result = await deletePostAPI(formData);
+    console.log(result);
+    if (result.data.status === "success") {
+      dispatch(deletePostSuccess(result.data.message));
+    }
+    dispatch(deletePostFail(result.data.message));
+  } catch (error) {
+    console.log(error.message);
   }
 };

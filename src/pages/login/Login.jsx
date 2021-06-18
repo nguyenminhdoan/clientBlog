@@ -1,8 +1,9 @@
 import { Form, Input, Button, Checkbox, Col } from "antd";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { userLogin } from "./loginAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 const layout = {
   labelCol: {
     span: 8,
@@ -20,11 +21,22 @@ const tailLayout = {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { isAuth } = useSelector((state) => state.userLogin);
+
+  // check here
+  // console.log(isAuth);
+
+  useEffect(() => {
+    sessionStorage.getItem("accessJWT") && history.push("/");
+  }, [history, isAuth]);
 
   const onFinish = (values) => {
     const { username, password } = values;
 
     dispatch(userLogin({ username, password }));
+    // isAuth && history.push("/");
+    // window.location.replace("/");
   };
 
   const onFinishFailed = (errorInfo) => {

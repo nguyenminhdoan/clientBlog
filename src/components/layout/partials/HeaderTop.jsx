@@ -39,7 +39,7 @@ const HeaderTop = () => {
         <div className="header">
           <div className="logo">
             <i className="fas fa-bolt"></i>
-            <a href="http://google.com">Blog</a>
+            <a href="/">Blog</a>
           </div>
           <div className="category">
             <div className="mobileHidden">
