@@ -35,7 +35,7 @@ const Login = () => {
     const { username, password } = values;
 
     dispatch(userLogin({ username, password }));
-    // isAuth && history.push("/");
+    isAuth && history.push("/");
     // window.location.replace("/");
   };
 

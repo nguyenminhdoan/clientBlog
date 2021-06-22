@@ -4,7 +4,7 @@ import Post from "../../components/Post/Post";
 import { fetchAllPosts } from "./postAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Spin, Alert } from "antd";
+import { Spin, Alert, Pagination } from "antd";
 import { useLocation } from "react-router-dom";
 
 const Posts = () => {
@@ -36,6 +36,10 @@ const Posts = () => {
           </Col>
         ))
       )}
+
+      
+
+      
     </Row>
   );
 };

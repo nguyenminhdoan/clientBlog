@@ -1,12 +1,11 @@
 import axios from "axios";
 
-const POST_POST_API = "http://localhost:3003/api/post";
-const DELETE_POST_API = "http://localhost:3003/api/";
+const POST_BLOG_API = "http://localhost:3003/api/post";
 const UPLOAD_IMG_API = "http://localhost:3003/api/upload";
 
 export const getAllPosts = async () => {
   try {
-    const result = await axios.get(POST_POST_API);
+    const result = await axios.get(POST_BLOG_API);
     return result;
   } catch (error) {
     console.log(error);
@@ -15,7 +14,7 @@ export const getAllPosts = async () => {
 
 export const getSinglePost = async (id) => {
   try {
-    const result = await axios.get(`${POST_POST_API}/${id}`);
+    const result = await axios.get(`${POST_BLOG_API}/${id}`);
     return result;
   } catch (error) {
     console.log(error);
@@ -24,7 +23,7 @@ export const getSinglePost = async (id) => {
 
 export const createPost = async (formData) => {
   try {
-    const result = await axios.post(`${POST_POST_API}`, formData, {
+    const result = await axios.post(`${POST_BLOG_API}`, formData, {
       headers: { Authorization: sessionStorage.getItem("accessJWT") },
     });
     return result;
@@ -47,11 +46,26 @@ export const upLoadFile = async (formData) => {
 
 export const deletePostAPI = async (formData) => {
   try {
-    console.log(DELETE_POST_API + formData._id);
-    const result = await axios.delete(`${POST_POST_API}/${formData._id}`, {
-      headers: { Authorization: sessionStorage.getItem("accessJWT") },
+    const result = await axios.delete(`${POST_BLOG_API}/${formData._id}`, {
       data: formData,
+      headers: { Authorization: sessionStorage.getItem("accessJWT") },
     });
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePostAPI = async (formData) => {
+  try {
+    const result = await axios.put(
+      `${POST_BLOG_API}/${formData._id}`,
+      formData,
+      {
+        headers: { Authorization: sessionStorage.getItem("accessJWT") },
+      }
+    );
     return result;
   } catch (error) {
     console.log(error.message);

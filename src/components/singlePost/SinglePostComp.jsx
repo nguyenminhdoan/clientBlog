@@ -1,43 +1,77 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { fetchSinglePost, deletePost } from "../../pages/posts/postAction";
+import {
+  fetchSinglePost,
+  deletePost,
+  updatePost,
+} from "../../pages/posts/postAction";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 const SinglePostComp = () => {
+  const initialState = {
+    title: "",
+    desc: "",
+  };
+  const [formUpdate, setFormUpdate] = useState(initialState);
+  const [updateMode, setUpdateMode] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const { posts } = useSelector((state) => state.posts);
   const { isAuth } = useSelector((state) => state.userLogin);
 
-  const formData = { _id: id, clientId: posts.clientId };
-
   useEffect(() => {
     dispatch(fetchSinglePost(id));
   }, [id, dispatch]);
 
   const handleDelete = () => {
-    dispatch(deletePost(formData));
-    window.location.replace("/");
+    const cf = window.confirm(
+      `Are you sure to delete this "${posts.title}" post`
+    );
+    if (cf) {
+      const formData = { _id: id, clientId: posts.clientId };
+      console.log(formData);
+
+      dispatch(deletePost(formData));
+      window.location.replace("/");
+    }
+  };
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setFormUpdate({ ...formUpdate, [name]: value });
+  };
+
+  const handleUpdate = () => {
+    const formData = { ...formUpdate, _id: id };
+    dispatch(updatePost(formData));
   };
 
   return (
     <div>
-      <StylePostTitle>
-        {posts.title}
-        <StylePostEdit>
-          {isAuth ? (
-            <>
-              {" "}
-              <i className="fas fa-edit"></i>
-              <i onClick={handleDelete} className="fas fa-trash"></i>
-            </>
-          ) : (
-            ""
-          )}
-        </StylePostEdit>
-      </StylePostTitle>
+      {updateMode ? (
+        <StyleInput
+          onChange={handleOnchange}
+          placeholder="please type title here"
+          name="title"
+        />
+      ) : (
+        <StylePostTitle>{posts.title}</StylePostTitle>
+      )}
+
+      <StylePostEdit>
+        {isAuth ? (
+          <>
+            {" "}
+            <i className="fas fa-edit" onClick={() => setUpdateMode(true)}></i>
+            <i onClick={handleDelete} className="fas fa-trash"></i>
+          </>
+        ) : (
+          ""
+        )}
+      </StylePostEdit>
+
       <StyleInfo>
         <span className="post-info_author">
           Author: <b>{posts.username}</b>
@@ -46,7 +80,19 @@ const SinglePostComp = () => {
           {new Date(posts.createdAt).toDateString()}
         </span>
       </StyleInfo>
-      <StyleContentPost>{posts.desc}</StyleContentPost>
+
+      {updateMode ? (
+        <StyleInput
+          onChange={handleOnchange}
+          placeholder="please type description here"
+          name="desc"
+        />
+      ) : (
+        <StyleContentPost>{posts.desc}</StyleContentPost>
+      )}
+      {updateMode && (
+        <StyleBntUpdate onClick={handleUpdate}>Update</StyleBntUpdate>
+      )}
     </div>
   );
 };
@@ -91,4 +137,28 @@ const StyleContentPost = styled.p`
   }
 `;
 
+const StyleInput = styled.textarea`
+  border: none;
+  width: 100%;
+  color: #666;
+  font-size: 18px;
+  line-height: 25px;
+
+  :focus {
+    outline: none;
+  }
+`;
+
+const StyleBntUpdate = styled.button`
+  width: 100px;
+  border: none;
+  background-color: teal;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 200px;
+  margin-left: 200px;
+  text-align: center;
+`;
 export default SinglePostComp;

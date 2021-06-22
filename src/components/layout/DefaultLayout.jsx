@@ -4,10 +4,28 @@ import React from "react";
 import Posts from "../../pages/posts/Posts";
 import Banner from "../banner/Banner";
 import Category from "../category/Category";
+import { Pagination } from "antd";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const { Content, Sider } = Layout;
 
 const DefaultLayout = () => {
+  const { posts } = useSelector((state) => state.posts);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const maxLengthPage = Math.ceil(posts.length / postsPerPage);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const totalPosts = posts.length;
+
   return (
     <Layout>
       <Banner />
@@ -23,6 +41,11 @@ const DefaultLayout = () => {
           >
             <Posts />
           </div>
+          <Pagination
+            style={{ textAlign: "center" }}
+            defaultCurrent={1}
+            total={maxLengthPage}
+          />
         </Content>
 
         <Sider theme="light  " className="site-layout-background" width={300}>

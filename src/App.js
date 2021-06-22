@@ -9,13 +9,13 @@ import HeaderTop from "./components/layout/partials/HeaderTop";
 import "./globalStyle.css";
 import Login from "./pages/login/Login";
 import { loginSuccess } from "./pages/login/loginSlice";
-import Register from "./pages/Register/Register";
+import Register from "./pages/register/Register";
 import SinglePost from "./pages/singlePost/SinglePost";
 import UserSetting from "./pages/userSetting/UserSetting";
 import Write from "./pages/write/Write";
 import { fetchNewJWT } from "./api/userAPI";
 import { fetchUserProfile } from "./pages/login/loginAction";
-
+import Contact from "./pages/contact/Contact";
 const { Header, Footer } = Layout;
 
 function App() {
@@ -64,9 +64,14 @@ function App() {
             <Route path="/post/:id">
               <SinglePost />
             </Route>
+
             <Route path="/write">{currentUser ? <Write /> : <Login />}</Route>
             <Route path="/settings">
               {currentUser ? <UserSetting /> : <Login />}
+            </Route>
+
+            <Route path="/contact">
+              <Contact />
             </Route>
 
             <Footer>
