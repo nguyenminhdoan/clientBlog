@@ -5,6 +5,7 @@ const initialState = {
   isAuth: false,
   error: "",
   user: {},
+  msgSuccess: "",
 };
 
 const loginSlice = createSlice({
@@ -14,10 +15,9 @@ const loginSlice = createSlice({
     loginPending: (state) => {
       state.isLoading = true;
     },
-    loginSuccess: (state) => {
+    loginSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.isAuth = true;
-      state.error = "";
     },
     loginFail: (state, { payload }) => {
       state.isLoading = false;

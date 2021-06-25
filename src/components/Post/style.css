@@ -1,0 +1,9 @@
+.ant-card .ant-card-cover {
+  height: 180px;
+  overflow: hidden;
+}
+
+.ant-card .ant-card-cover img {
+  height: 100%;
+  object-fit: cover;
+}

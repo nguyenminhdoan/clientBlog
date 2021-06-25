@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "antd/dist/antd.css";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const Post = (props) => {
   const { post } = props;
@@ -15,7 +16,6 @@ const Post = (props) => {
           hoverable
           cover={
             <img
-              style={({ height: "70vh" }, { borderRadius: "4px 4px 0 0 " })}
               alt="Modern Design"
               src={
                 post.photo
@@ -91,4 +91,5 @@ const StylePostDesc = styled.p`
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 `;
+
 export default Post;

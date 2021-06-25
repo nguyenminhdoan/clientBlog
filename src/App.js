@@ -66,7 +66,8 @@ function App() {
             </Route>
 
             <Route path="/write">{currentUser ? <Write /> : <Login />}</Route>
-            <Route path="/settings">
+
+            <Route path="/settings/:userId">
               {currentUser ? <UserSetting /> : <Login />}
             </Route>
 

@@ -14,11 +14,12 @@ export const userLogin = (formData) => async (dispatch) => {
 
     //call api
     const result = await loginUser(formData);
+    // console.log(result);
     if (result.data.status === "error") {
-      return dispatch(loginFail(result.message));
+      return dispatch(loginFail(result.data.message));
     }
-    dispatch(loginSuccess());
     dispatch(fetchUserProfile());
+    dispatch(loginSuccess());
   } catch (error) {
     console.log(error);
     dispatch(loginFail());

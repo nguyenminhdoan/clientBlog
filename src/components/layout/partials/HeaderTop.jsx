@@ -7,12 +7,13 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../api/userAPI";
 import { logout } from "../../../pages/login/loginSlice";
+import { Link as LinkRouter } from "react-router-dom";
 
 const { Link } = Anchor;
 
 const { Header } = Layout;
 const HeaderTop = () => {
-  const { isAuth } = useSelector((state) => state.userLogin);
+  const { isAuth, user } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const logOut = () => {
     sessionStorage.removeItem("accessJWT");
@@ -83,11 +84,13 @@ const HeaderTop = () => {
           </div>
 
           <div className="profile">
-            <img
-              className="avatar"
-              src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p320x320/95311911_1196339757364555_4657815680878379008_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=7206a8&_nc_ohc=Kz3paLSyu6AAX8E0P3T&_nc_ht=scontent-sin6-1.xx&tp=6&oh=56cce99347b38e7599d321e31ffc3d24&oe=60DEEE9B"
-              alt="avatar"
-            />
+            <LinkRouter to={`/settings/${user._id}`}>
+              <img
+                className="avatar"
+                src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p320x320/95311911_1196339757364555_4657815680878379008_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=7206a8&_nc_ohc=Kz3paLSyu6AAX8E0P3T&_nc_ht=scontent-sin6-1.xx&tp=6&oh=56cce99347b38e7599d321e31ffc3d24&oe=60DEEE9B"
+                alt="avatar"
+              />
+            </LinkRouter>
             <i className="search-icon fas fa-search"></i>
           </div>
 

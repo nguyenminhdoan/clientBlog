@@ -11,20 +11,20 @@ import { useSelector } from "react-redux";
 const { Content, Sider } = Layout;
 
 const DefaultLayout = () => {
-  const { posts } = useSelector((state) => state.posts);
+  // const { posts } = useSelector((state) => state.posts);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [postsPerPage] = useState(10);
 
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  const maxLengthPage = Math.ceil(posts.length / postsPerPage);
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // // Get current posts
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // const maxLengthPage = Math.ceil(posts.length / postsPerPage);
+  // // Change page
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const totalPosts = posts.length;
+  // const totalPosts = posts.length;
 
   return (
     <Layout>
@@ -44,7 +44,7 @@ const DefaultLayout = () => {
           <Pagination
             style={{ textAlign: "center" }}
             defaultCurrent={1}
-            total={maxLengthPage}
+            total={1}
           />
         </Content>
 

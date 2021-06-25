@@ -20,7 +20,7 @@ const SinglePostComp = () => {
   const { id } = useParams();
 
   const { posts } = useSelector((state) => state.posts);
-  const { isAuth } = useSelector((state) => state.userLogin);
+  const { isAuth, user } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     dispatch(fetchSinglePost(id));
@@ -32,7 +32,6 @@ const SinglePostComp = () => {
     );
     if (cf) {
       const formData = { _id: id, clientId: posts.clientId };
-      console.log(formData);
 
       dispatch(deletePost(formData));
       window.location.replace("/");
@@ -61,7 +60,7 @@ const SinglePostComp = () => {
       )}
 
       <StylePostEdit>
-        {isAuth ? (
+        {isAuth && posts.clientId === user._id ? (
           <>
             {" "}
             <i className="fas fa-edit" onClick={() => setUpdateMode(true)}></i>

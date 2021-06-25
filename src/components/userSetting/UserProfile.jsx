@@ -1,6 +1,11 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { updateProfile } from "../../pages/userSetting/userSettingAction";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { importImg } from "../../pages/posts/postAction";
 
 const formItemLayout = {
   labelCol: {
@@ -12,13 +17,67 @@ const formItemLayout = {
 };
 
 const UserProfile = () => {
+  const initialState = {
+    username: "",
+    email: "",
+    password: "",
+    file: null,
+  };
+
+  const PF = "http://localhost:3000/images/";
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+
+  const [formUpdateUser, setFormUpdateUser] = useState(initialState);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const { username, email, password } = values;
+
+    let newFormUpdateUser;
+
+    setFormUpdateUser({ ...formUpdateUser, username, email, password });
+
+    console.log(formUpdateUser);
+
+    if (formUpdateUser.file) {
+      const formData = new FormData();
+      formData.append("name", formUpdateUser.file.file.name);
+      formData.append("file", formUpdateUser.file.file);
+      newFormUpdateUser = {
+        ...formUpdateUser,
+        photo: formUpdateUser.file.file.name,
+      };
+
+      // dispatch(updateProfile(userId, newFormUpdateUser));
+      dispatch(importImg(formData));
+      console.log(newFormUpdateUser);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const handleUploadImg = (e) => {
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const url = URL.createObjectURL(e.target.files[0]);
+
+      setFormUpdateUser({
+        ...formUpdateUser,
+        file: { ...files[0], file: files[0], url },
+      });
+      console.log(formUpdateUser);
+    }
+  };
+
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setFormUpdateUser({ ...formUpdateUser, [name]: value });
+    // console.log(formPost);
+  };
+
   return (
     <Form
       name="basic"
@@ -29,10 +88,10 @@ const UserProfile = () => {
       onFinishFailed={onFinishFailed}
     >
       <StyleSetting>
-        <img
-          src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          alt=""
-        />
+        {formUpdateUser.file && formUpdateUser.file.url && (
+          <img className="writeImg" src={formUpdateUser.file.url} alt="" />
+        )}
+
         <label htmlFor="fileInput">
           <i className=" far fa-user-circle"></i>{" "}
         </label>
@@ -41,11 +100,13 @@ const UserProfile = () => {
           type="file"
           style={{ display: "none" }}
           className="settingsPPInput"
+          onChange={handleUploadImg}
         />
       </StyleSetting>
       <Form.Item
         {...formItemLayout}
         label="Username"
+        onChange={handleOnchange}
         name="username"
         rules={[
           {
@@ -60,7 +121,8 @@ const UserProfile = () => {
       <Form.Item
         {...formItemLayout}
         label="Email"
-        name="Email"
+        onChange={handleOnchange}
+        name="email"
         rules={[
           {
             required: true,
@@ -74,6 +136,7 @@ const UserProfile = () => {
       <Form.Item
         {...formItemLayout}
         label="Password"
+        onChange={handleOnchange}
         name="password"
         rules={[
           {

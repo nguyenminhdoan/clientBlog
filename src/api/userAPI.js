@@ -15,6 +15,7 @@ export const createNewUser = async (formData) => {
 export const loginUser = async (formData) => {
   try {
     const result = await axios.post(`${USER_API}login`, formData);
+    console.log(result);
     if (result.data.status === "success") {
       sessionStorage.setItem("accessJWT", result.data.accessJWT);
       localStorage.setItem(
@@ -70,6 +71,19 @@ export const fetchNewJWT = async () => {
       sessionStorage.setItem("accessJWT", result.data.accessJWT);
     }
     Promise.resolve(true);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const updateUserProfile = async (id, formData) => {
+  console.log(id);
+  try {
+    const result = await axios.put(`${USER_API}${id}`, formData, {
+      headers: { Authorization: sessionStorage.getItem("accessJWT") },
+    });
+    console.log(result);
+    return result;
   } catch (error) {
     console.log(error.message);
   }
