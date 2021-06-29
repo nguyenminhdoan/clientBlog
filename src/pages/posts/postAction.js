@@ -8,6 +8,7 @@ import {
   deletePostFail,
   deletePostLoading,
   deletePostSuccess,
+  searchPost,
 } from "./postsSlice";
 import {
   getAllPosts,
@@ -81,4 +82,8 @@ export const updatePost = (formData) => async (dispatch) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const searchPostAction = (str) => (dispatch) => {
+  dispatch(searchPost(str));
 };

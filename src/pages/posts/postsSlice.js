@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   error: "",
   msgSuccess: "",
+  searchPostsList: [],
 };
 
 const PostsSlice = createSlice({
@@ -48,6 +49,12 @@ const PostsSlice = createSlice({
       state.isLoading = true;
       state.error = action.payload;
     },
+    searchPost: (state, action) => {
+      state.searchPostsList = state.posts.filter((post) => {
+        if (!action.payload) return post;
+        return post.title.toLowerCase().includes(action.payload.toLowerCase());
+      });
+    },
   },
 });
 
@@ -63,5 +70,6 @@ export const {
   deletePostLoading,
   deletePostSuccess,
   deletePostFail,
+  searchPost,
 } = actions;
 export default reducer;

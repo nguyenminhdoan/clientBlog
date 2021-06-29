@@ -4,13 +4,16 @@ import Post from "../../components/Post/Post";
 import { fetchAllPosts } from "./postAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Spin, Alert, Pagination } from "antd";
+import { Spin, Alert } from "antd";
 import { useLocation } from "react-router-dom";
 
-const Posts = () => {
+const Posts = (props) => {
+  const { posts } = props;
+  // console.log(posts);
   const location = useLocation();
   const { path } = location;
-  const { posts, isLoading } = useSelector((state) => state.posts);
+  const { isLoading } = useSelector((state) => state.posts);
+  // console.log(searchPostsList);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,6 +28,7 @@ const Posts = () => {
         </Spin>
       ) : (
         Array.isArray(posts) &&
+        posts.length > 0 &&
         posts.map((post) => (
           <Col
             key={post._id}
@@ -36,10 +40,6 @@ const Posts = () => {
           </Col>
         ))
       )}
-
-      
-
-      
     </Row>
   );
 };

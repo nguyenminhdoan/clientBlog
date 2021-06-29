@@ -91,7 +91,7 @@ const HeaderTop = () => {
                 alt="avatar"
               />
             </LinkRouter>
-            <i className="search-icon fas fa-search"></i>
+          
           </div>
 
           <div className="mobileVisible">

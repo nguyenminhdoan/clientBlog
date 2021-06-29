@@ -7,6 +7,7 @@ import "./style.css";
 
 const Post = (props) => {
   const { post } = props;
+
   const PF = "http://localhost:3003/images/";
 
   return (
