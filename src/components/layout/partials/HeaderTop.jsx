@@ -16,12 +16,17 @@ const HeaderTop = () => {
   const { isAuth, user } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const logOut = () => {
-    sessionStorage.removeItem("accessJWT");
-    localStorage.removeItem("blogSite");
-    userLogout();
-    dispatch(logout());
+    const cf = window.confirm(
+      `Do you want to log out?`
+    );
+    if (cf) {
+      sessionStorage.removeItem("accessJWT");
+      localStorage.removeItem("blogSite");
+      userLogout();
+      dispatch(logout());
 
-    history.push("/");
+      history.push("/");
+    }
   };
 
   const history = useHistory();
@@ -91,7 +96,6 @@ const HeaderTop = () => {
                 alt="avatar"
               />
             </LinkRouter>
-          
           </div>
 
           <div className="mobileVisible">

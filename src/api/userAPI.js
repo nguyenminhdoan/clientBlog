@@ -15,7 +15,7 @@ export const createNewUser = async (formData) => {
 export const loginUser = async (formData) => {
   try {
     const result = await axios.post(`${USER_API}login`, formData);
-    console.log(result);
+    // console.log(result);
     if (result.data.status === "success") {
       sessionStorage.setItem("accessJWT", result.data.accessJWT);
       localStorage.setItem(

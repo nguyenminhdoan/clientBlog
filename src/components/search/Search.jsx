@@ -10,16 +10,16 @@ const Search = () => {
     dispatch(searchPostAction(value));
   };
   return (
-    <div class="search-box">
+    <div className="search-box">
       <input
-        class="search-txt"
+        className="search-txt"
         type="text"
         name="search"
         placeholder="Type to Search"
         onChange={handleOnchange}
       />
-      <div class="search-btn" href="#">
-        <i class="fas fa-search"></i>
+      <div className="search-btn" href="#">
+        <i className="fas fa-search"></i>
       </div>
     </div>
   );

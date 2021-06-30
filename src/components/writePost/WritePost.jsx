@@ -15,6 +15,7 @@ const WritePost = () => {
   const { user } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
+  //
 
   const handleSubmit = (e) => {
     let newFormPost;
@@ -66,7 +67,7 @@ const WritePost = () => {
         <img className="writeImg" src={formPost.file.url} alt="" />
       )}
 
-      <form className="writeForm" onSubmit={handleSubmit}>
+      <form className="writeForm">
         <div className="writeFormGroup">
           <label htmlFor="fileInput">
             <i className="writeIcon fas fa-plus"></i>
@@ -98,7 +99,7 @@ const WritePost = () => {
             onChange={handleOnchange}
           />
         </div>
-        <button className="writeSubmit" type="submit">
+        <button onClick={handleSubmit} className="writeSubmit" type="submit">
           Publish
         </button>
       </form>

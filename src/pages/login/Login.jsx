@@ -1,9 +1,10 @@
-import { Form, Input, Button, Checkbox, Col } from "antd";
+import { Form, Input, Button, Checkbox, Col, Alert } from "antd";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { userLogin } from "./loginAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { resetMessage } from "../login/loginSlice";
 const layout = {
   labelCol: {
     span: 8,
@@ -22,7 +23,7 @@ const tailLayout = {
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuth } = useSelector((state) => state.userLogin);
+  const { isAuth, error } = useSelector((state) => state.userLogin);
 
   // check here
   // console.log(isAuth);
@@ -42,6 +43,12 @@ const Login = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(() => {
+    return () => {
+      error && dispatch(resetMessage());
+    };
+  }, [dispatch, error]);
 
   return (
     <StyleLogin>
@@ -80,6 +87,7 @@ const Login = () => {
         >
           <Input.Password />
         </Form.Item>
+        <Col>{error && <Alert message={error} type="error" showIcon />}</Col>
         <Col>
           Don't have account yet? {}
           <Link to="/register">Sign up for free!</Link>

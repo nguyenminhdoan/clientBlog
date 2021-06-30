@@ -38,6 +38,9 @@ const loginSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    resetMessage: (state) => {
+      state.error = "";
+    },
   },
 });
 
@@ -51,6 +54,7 @@ export const {
   getUserPending,
   getUserSuccess,
   getUserFail,
+  resetMessage,
 } = actions;
 
 export default reducer;

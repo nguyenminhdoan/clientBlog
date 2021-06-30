@@ -71,3 +71,14 @@ export const updatePostAPI = async (formData) => {
     console.log(error.message);
   }
 };
+
+export const paginate = async (page) => {
+  try {
+    const result = await axios.get(
+      `${POST_BLOG_API}/page?page=${page}&equal=4`
+    );
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};

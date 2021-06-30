@@ -9,6 +9,12 @@ import {
   deletePostLoading,
   deletePostSuccess,
   searchPost,
+  createPostLoading,
+  createPostSuccess,
+  createPostFail,
+  paginateLoading,
+  paginateFail,
+  paginateSuccess,
 } from "./postsSlice";
 import {
   getAllPosts,
@@ -17,8 +23,14 @@ import {
   upLoadFile,
   deletePostAPI,
   updatePostAPI,
+  paginate,
 } from "../../api/postAPI";
-
+import { notification } from "antd";
+const openNotificationWithIcon = (type, msg) => {
+  notification[type]({
+    message: msg,
+  });
+};
 export const fetchAllPosts = () => async (dispatch) => {
   dispatch(fetchPostLoading());
   try {
@@ -45,8 +57,18 @@ export const fetchSinglePost = (id) => async (dispatch) => {
 
 export const createNewPost = (formData) => async (dispatch) => {
   try {
+    dispatch(createPostLoading());
     const result = await createPost(formData);
-    // console.log(result);
+    if (result.data.status === "success") {
+      dispatch(createPostSuccess(result.data.message));
+      openNotificationWithIcon("success", result.data.message);
+      window.location.replace("/");
+    } else {
+      dispatch(createPostFail(result.data.message));
+      openNotificationWithIcon("error", result.data.message);
+    }
+
+    console.log(result);
   } catch (error) {
     console.log(error);
   }
@@ -86,4 +108,18 @@ export const updatePost = (formData) => async (dispatch) => {
 
 export const searchPostAction = (str) => (dispatch) => {
   dispatch(searchPost(str));
+};
+
+export const paginateAction = (page) => async (dispatch) => {
+  try {
+    dispatch(paginateLoading());
+    const result = await paginate(page);
+    console.log(result);
+    if (result) {
+      dispatch(paginateSuccess(result.data));
+    }
+    dispatch(paginateFail());
+  } catch (error) {
+    console.log(error);
+  }
 };

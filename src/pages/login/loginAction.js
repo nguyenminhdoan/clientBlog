@@ -35,7 +35,7 @@ export const fetchUserProfile = () => async (dispatch) => {
     }
     dispatch(getUserFail("User is not found"));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     dispatch(getUserFail());
   }
 };

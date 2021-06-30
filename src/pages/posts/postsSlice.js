@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   posts: [],
   isLoading: false,
-  error: "",
-  msgSuccess: "",
+  msg: null,
   searchPostsList: [],
+  status: "",
+  pagination: [],
 };
 
 const PostsSlice = createSlice({
@@ -21,7 +22,7 @@ const PostsSlice = createSlice({
     },
     fetchPostFail: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.msg = action.payload;
     },
 
     // FETCH SINGLE POST
@@ -34,7 +35,7 @@ const PostsSlice = createSlice({
     },
     fetchSinglePostFail: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.msg = action.payload;
     },
 
     // delete post
@@ -43,11 +44,33 @@ const PostsSlice = createSlice({
     },
     deletePostSuccess: (state, action) => {
       state.isLoading = true;
-      state.msgSuccess = action.payload;
+      state.msg = action.payload;
     },
     deletePostFail: (state, action) => {
       state.isLoading = true;
-      state.error = action.payload;
+      state.msg = action.payload;
+    },
+    createPostLoading: (state) => {
+      state.isLoading = true;
+    },
+    createPostSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.msg = payload;
+      state.status = "success";
+    },
+    createPostFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.msg = payload;
+    },
+    paginateLoading: (state) => {
+      state.isLoading = true;
+    },
+    paginateSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.pagination = payload;
+    },
+    paginateFail: (state) => {
+      state.isLoading = false;
     },
     searchPost: (state, action) => {
       state.searchPostsList = state.posts.filter((post) => {
@@ -71,5 +94,11 @@ export const {
   deletePostSuccess,
   deletePostFail,
   searchPost,
+  createPostLoading,
+  createPostSuccess,
+  createPostFail,
+  paginateLoading,
+  paginateFail,
+  paginateSuccess,
 } = actions;
 export default reducer;

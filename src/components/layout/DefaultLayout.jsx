@@ -1,33 +1,39 @@
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
-import React, { useEffect } from "react";
+import React from "react";
 import Posts from "../../pages/posts/Posts";
 import Banner from "../banner/Banner";
 import Category from "../category/Category";
 import { Pagination } from "antd";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Search from "../search/Search";
+import { useEffect } from "react";
+import { paginateAction } from "../../pages/posts/postAction";
 
 const { Content, Sider } = Layout;
 
 const DefaultLayout = () => {
-  const { searchPostsList } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+  const { searchPostsList, pagination } = useSelector((state) => state.posts);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
   // // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = searchPostsList.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPosts = searchPostsList.length;
+
+  const currentPosts = pagination.data;
 
   const handlePageChange = (e) => {
     setCurrentPage(e);
     // console.log(indexOfFirstPost);
     // console.log(indexOfLastPost);
   };
+
+  useEffect(() => {
+    // goi api phan trang
+    dispatch(paginateAction(currentPage));
+  }, [dispatch, currentPage]);
 
   return (
     <Layout>
@@ -52,7 +58,7 @@ const DefaultLayout = () => {
           <Pagination
             style={{ marginBottom: 20 }}
             defaultCurrent={1}
-            total={totalPosts}
+            total={pagination && pagination.page && pagination.page._total + 1  }
             pageSize={postsPerPage}
             onChange={handlePageChange}
           />
