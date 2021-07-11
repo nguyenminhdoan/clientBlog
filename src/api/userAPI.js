@@ -77,9 +77,9 @@ export const fetchNewJWT = async () => {
 };
 
 export const updateUserProfile = async (id, formData) => {
-  console.log(id);
   try {
     const result = await axios.put(`${USER_API}${id}`, formData, {
+      data: formData,
       headers: { Authorization: sessionStorage.getItem("accessJWT") },
     });
     console.log(result);

@@ -72,11 +72,22 @@ const PostsSlice = createSlice({
     paginateFail: (state) => {
       state.isLoading = false;
     },
-    searchPost: (state, action) => {
-      state.searchPostsList = state.posts.filter((post) => {
-        if (!action.payload) return post;
-        return post.title.toLowerCase().includes(action.payload.toLowerCase());
-      });
+    // searchPost: (state, action) => {
+    //   state.searchPostsList = state.posts.filter((post) => {
+    //     if (!action.payload) return post;
+    //     return post.title.toLowerCase().includes(action.payload.toLowerCase());
+    //   });
+    // },
+    searchPostLoading: (state) => {
+      state.isLoading = true;
+    },
+    searchPostSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.searchPostsList = payload;
+    },
+    searchPostFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.msg = payload;
     },
   },
 });
@@ -100,5 +111,8 @@ export const {
   paginateLoading,
   paginateFail,
   paginateSuccess,
+  searchPostLoading,
+  searchPostSuccess,
+  searchPostFail,
 } = actions;
 export default reducer;

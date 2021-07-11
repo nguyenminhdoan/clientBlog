@@ -50,7 +50,7 @@ export const deletePostAPI = async (formData) => {
       data: formData,
       headers: { Authorization: sessionStorage.getItem("accessJWT") },
     });
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (error) {
     console.log(error);
@@ -72,13 +72,25 @@ export const updatePostAPI = async (formData) => {
   }
 };
 
-export const paginate = async (page) => {
+// export const paginate = async (page) => {
+//   try {
+//     const result = await axios.get(
+//       `${POST_BLOG_API}/page?page=${page}&equal=4`
+//     );
+//     return result;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export const searchPosts = async (page, title) => {
   try {
-    const result = await axios.get(
-      `${POST_BLOG_API}/page?page=${page}&equal=4`
+    const result = await axios.post(
+      `${POST_BLOG_API}/search?page=${page}&equal=4`,
+      title
     );
     return result;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };

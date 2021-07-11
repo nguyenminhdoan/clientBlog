@@ -13,12 +13,12 @@ const { Link } = Anchor;
 
 const { Header } = Layout;
 const HeaderTop = () => {
+  const PF = "http://localhost:3003/images/";
+
   const { isAuth, user } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const logOut = () => {
-    const cf = window.confirm(
-      `Do you want to log out?`
-    );
+    const cf = window.confirm(`Do you want to log out?`);
     if (cf) {
       sessionStorage.removeItem("accessJWT");
       localStorage.removeItem("blogSite");
@@ -90,11 +90,17 @@ const HeaderTop = () => {
 
           <div className="profile">
             <LinkRouter to={`/settings/${user._id}`}>
-              <img
-                className="avatar"
-                src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p320x320/95311911_1196339757364555_4657815680878379008_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=7206a8&_nc_ohc=Kz3paLSyu6AAX8E0P3T&_nc_ht=scontent-sin6-1.xx&tp=6&oh=56cce99347b38e7599d321e31ffc3d24&oe=60DEEE9B"
-                alt="avatar"
-              />
+              {isAuth && (
+                <img
+                  className="avatar"
+                  src={
+                    user.profilePic
+                      ? PF + user.profilePic
+                      : "https://images.unsplash.com/photo-1621570168855-e9651220e831?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+                  }
+                  alt="avatar"
+                />
+              )}
             </LinkRouter>
           </div>
 

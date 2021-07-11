@@ -24,7 +24,7 @@ const UserProfile = () => {
     file: null,
   };
 
-  const PF = "http://localhost:3000/images/";
+  // const PF = "http://localhost:3000/images/";
   const { userId } = useParams();
   const dispatch = useDispatch();
 
@@ -45,10 +45,10 @@ const UserProfile = () => {
       formData.append("file", formUpdateUser.file.file);
       newFormUpdateUser = {
         ...formUpdateUser,
-        photo: formUpdateUser.file.file.name,
+        profilePic: formUpdateUser.file.file.name,
       };
 
-      // dispatch(updateProfile(userId, newFormUpdateUser));
+      dispatch(updateProfile(userId, newFormUpdateUser));
       dispatch(importImg(formData));
       console.log(newFormUpdateUser);
     }
@@ -120,11 +120,12 @@ const UserProfile = () => {
 
       <Form.Item
         {...formItemLayout}
-        label="Email"
+        label="E-mail"
         onChange={handleOnchange}
         name="email"
         rules={[
           {
+            type: "email",
             required: true,
             message: "Please input your Email!",
           },

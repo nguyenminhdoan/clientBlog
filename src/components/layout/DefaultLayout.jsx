@@ -1,39 +1,43 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Pagination } from "antd";
 import "antd/dist/antd.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searchPostAction } from "../../pages/posts/postAction";
 import Posts from "../../pages/posts/Posts";
 import Banner from "../banner/Banner";
 import Category from "../category/Category";
-import { Pagination } from "antd";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Search from "../search/Search";
-import { useEffect } from "react";
-import { paginateAction } from "../../pages/posts/postAction";
 
 const { Content, Sider } = Layout;
 
 const DefaultLayout = () => {
   const dispatch = useDispatch();
-  const { searchPostsList, pagination } = useSelector((state) => state.posts);
+  const { searchPostsList } = useSelector((state) => state.posts);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
+  const [formData, setFormData] = useState({ title: "" });
 
   // // Get current posts
 
-  const currentPosts = pagination.data;
+  const currentPosts = searchPostsList.data;
 
   const handlePageChange = (e) => {
     setCurrentPage(e);
-    // console.log(indexOfFirstPost);
-    // console.log(indexOfLastPost);
   };
 
   useEffect(() => {
-    // goi api phan trang
-    dispatch(paginateAction(currentPage));
-  }, [dispatch, currentPage]);
+    // call api for pagination
+    // dispatch(paginateAction(currentPage));
+    // call api for searching
+    dispatch(searchPostAction(currentPage, formData));
+  }, [dispatch, currentPage, formData]);
+
+  const handleFilterChange = (data) => {
+    // const formData = { title: data.searchTerm };
+    setFormData({ title: data.searchTerm });
+    // dispatch(searchPostAction(formData)); // call api
+  };
 
   return (
     <Layout>
@@ -47,7 +51,7 @@ const DefaultLayout = () => {
           className="site-layout"
           style={{ padding: "0 50px", marginTop: 64 }}
         >
-          <Search />
+          <Search onSubmit={handleFilterChange} />
 
           <div
             className="site-layout-background"
@@ -58,7 +62,11 @@ const DefaultLayout = () => {
           <Pagination
             style={{ marginBottom: 20 }}
             defaultCurrent={1}
-            total={pagination && pagination.page && pagination.page._total + 1  }
+            total={
+              searchPostsList &&
+              searchPostsList.page &&
+              searchPostsList.page._total + 1
+            }
             pageSize={postsPerPage}
             onChange={handlePageChange}
           />

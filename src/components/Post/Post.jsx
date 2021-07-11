@@ -70,6 +70,11 @@ const StylePostTitle = styled.span`
   font-weight: 700;
   margin-top: 15px;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const StylePostDate = styled.span`
@@ -89,7 +94,7 @@ const StylePostDesc = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
 

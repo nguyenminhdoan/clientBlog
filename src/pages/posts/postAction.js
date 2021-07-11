@@ -8,13 +8,15 @@ import {
   deletePostFail,
   deletePostLoading,
   deletePostSuccess,
-  searchPost,
   createPostLoading,
   createPostSuccess,
   createPostFail,
-  paginateLoading,
-  paginateFail,
-  paginateSuccess,
+  // paginateLoading,
+  // paginateFail,
+  // paginateSuccess,
+  searchPostLoading,
+  searchPostSuccess,
+  searchPostFail,
 } from "./postsSlice";
 import {
   getAllPosts,
@@ -23,7 +25,8 @@ import {
   upLoadFile,
   deletePostAPI,
   updatePostAPI,
-  paginate,
+  // paginate,
+  searchPosts,
 } from "../../api/postAPI";
 import { notification } from "antd";
 const openNotificationWithIcon = (type, msg) => {
@@ -99,27 +102,38 @@ export const deletePost = (formData) => async (dispatch) => {
 export const updatePost = (formData) => async (dispatch) => {
   try {
     const result = await updatePostAPI(formData);
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const searchPostAction = (str) => (dispatch) => {
-  dispatch(searchPost(str));
-};
-
-export const paginateAction = (page) => async (dispatch) => {
+export const searchPostAction = (page, title) => async (dispatch) => {
   try {
-    dispatch(paginateLoading());
-    const result = await paginate(page);
-    console.log(result);
-    if (result) {
-      dispatch(paginateSuccess(result.data));
+    dispatch(searchPostLoading());
+    const result = await searchPosts(page,title);
+    if (result.data.status === "success") {
+      dispatch(searchPostSuccess(result.data));
+    } else {
+      dispatch(searchPostFail(result.data.message));
     }
-    dispatch(paginateFail());
+    console.log(result);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
+
+// export const paginateAction = (page) => async (dispatch) => {
+//   try {
+//     dispatch(paginateLoading());
+//     const result = await paginate(page);
+//     // console.log(result);
+//     if (result) {
+//       dispatch(paginateSuccess(result.data));
+//     }
+//     dispatch(paginateFail());
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
