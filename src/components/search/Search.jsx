@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState } from "react";
 import "./style.css";
-import { searchPostAction } from "../../pages/posts/postAction";
-import { useRef } from "react";
 
 const Search = (props) => {
   const { onSubmit } = props;

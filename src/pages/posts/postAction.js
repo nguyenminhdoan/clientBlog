@@ -118,7 +118,7 @@ export const searchPostAction = (page, title) => async (dispatch) => {
     } else {
       dispatch(searchPostFail(result.data.message));
     }
-    console.log(result);
+    // console.log(result);
   } catch (error) {
     console.log(error.message);
   }

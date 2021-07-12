@@ -32,11 +32,10 @@ const UserProfile = () => {
 
   const onFinish = (values) => {
     const { username, email, password } = values;
-
-    let newFormUpdateUser;
+    console.log(username, email, password);
 
     setFormUpdateUser({ ...formUpdateUser, username, email, password });
-
+    let newFormUpdateUser;
     console.log(formUpdateUser);
 
     if (formUpdateUser.file) {
@@ -50,13 +49,12 @@ const UserProfile = () => {
 
       dispatch(updateProfile(userId, newFormUpdateUser));
       dispatch(importImg(formData));
-      console.log(newFormUpdateUser);
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = (errorInfo) => {
+  //   console.log("Failed:", errorInfo);
+  // };
 
   const handleUploadImg = (e) => {
     const { files } = e.target;
@@ -73,9 +71,11 @@ const UserProfile = () => {
   };
 
   const handleOnchange = (e) => {
-    const { name, value } = e.target;
-    setFormUpdateUser({ ...formUpdateUser, [name]: value });
-    // console.log(formPost);
+    // const { name, value } = e;
+
+    setFormUpdateUser({ ...formUpdateUser, ...e });
+    console.log(formUpdateUser);
+    // console.log(allFieldsValues);
   };
 
   return (
@@ -85,7 +85,8 @@ const UserProfile = () => {
         remember: true,
       }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // onFinishFailed={onFinishFailed}
+      onValuesChange={handleOnchange}
     >
       <StyleSetting>
         {formUpdateUser.file && formUpdateUser.file.url && (
@@ -106,7 +107,7 @@ const UserProfile = () => {
       <Form.Item
         {...formItemLayout}
         label="Username"
-        onChange={handleOnchange}
+        // onChange={handleOnchange}
         name="username"
         rules={[
           {
@@ -121,7 +122,7 @@ const UserProfile = () => {
       <Form.Item
         {...formItemLayout}
         label="E-mail"
-        onChange={handleOnchange}
+        // onChange={handleOnchange}
         name="email"
         rules={[
           {
@@ -137,7 +138,7 @@ const UserProfile = () => {
       <Form.Item
         {...formItemLayout}
         label="Password"
-        onChange={handleOnchange}
+        // onChange={handleOnchange}
         name="password"
         rules={[
           {
